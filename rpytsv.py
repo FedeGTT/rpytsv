@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # extracts source text and translated text from Ren'Py files and saves the data in .tsv files for CAT tools
-# column A: identifier, column B: character, column C: source; coulmn D: target
+# structure of the .tsv files: no header, column A = id, column B = character, column C = source language; coulmn D = target language
 
 import glob # list .rpy files in directory
 import re # regex
@@ -41,8 +41,6 @@ for f in rpy:
 
         # create and open .rpy.tsv output file
         with open(str(f) + '.tsv', 'w', encoding = 'UTF-8') as tsv_file:
-            # write the header row
-            tsv_file.write('ID\tCharacter\tSource\tTarget')
             # search for ids using regex
             for i in regex_id.finditer(input):
                 # create a list for characters
@@ -62,4 +60,4 @@ for f in rpy:
                     target_list.append(k.group(2))
                 # write to the output file a newline followed by id, character, source text and translated text found, separated by tabulations
                 for character, source, target in zip(character_list, source_list, target_list):
-                    tsv_file.write('\n{}\t{}\t{}\t{}'.format(i.group(1),character,source,target))
+                    tsv_file.write('{}\t{}\t{}\t{}\n'.format(i.group(1),character,source,target))
