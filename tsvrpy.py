@@ -40,6 +40,7 @@ for f in tsv:
                 rpy_id = [i for i, item in enumerate(rpy_list) if re.search('^    (?P<type>extend|new|[^\s]{1,2})\s*\"(?P<text>.*)\"', item)]
                 # insert the translations
                 for m in rpy_id:
+                    # repr() makes sure \n are parsed correctly, .strip() removes leading and trailing spaces, ', "
                     rpy_list[m] = re.sub(r'\"\"', '\"' + repr(translation_list[n]).strip(" \'\"") + '\"', rpy_list[m])
                     # increase the counter
                     n += 1
